@@ -1,6 +1,6 @@
 package com.emmanuelkehinde.ktlint_sample_project
 
-import junit.framework.Assert.assertEquals
+import junit.framework.Assert.*
 import org.junit.Test
 
 /**
