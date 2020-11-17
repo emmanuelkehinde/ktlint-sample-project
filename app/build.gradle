@@ -59,9 +59,15 @@ task installGitHook(type: Copy) {
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         suffix = "windows"
     }
+
     from new File(rootProject.rootDir, "scripts/pre-commit-$suffix")
     into { new File(rootProject.rootDir, '.git/hooks') }
     rename("pre-commit-$suffix", 'pre-commit')
+
+    from new File(rootProject.rootDir, "scripts/pre-push-$suffix")
+    into { new File(rootProject.rootDir, '.git/hooks') }
+    rename("pre-push-$suffix", 'pre-push')
+
     fileMode 0775
 }
 
