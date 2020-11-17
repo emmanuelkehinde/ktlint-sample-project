@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -51,3 +53,16 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
+
+task installGitHook(type: Copy) {
+    def suffix = "macos"
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        suffix = "windows"
+    }
+    from new File(rootProject.rootDir, "scripts/pre-commit-$suffix")
+    into { new File(rootProject.rootDir, '.git/hooks') }
+    rename("pre-commit-$suffix", 'pre-commit')
+    fileMode 0775
+}
+
+tasks.getByPath(':app:preBuild').dependsOn installGitHook
